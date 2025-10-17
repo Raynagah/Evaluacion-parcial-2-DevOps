@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import data from './data/data';
+import data from '../data/data';
 import Layout from "../plantillas/Layout";
 import Imagen from "../atomos/Imagen";
 import Texto from "../atomos/Texto";
