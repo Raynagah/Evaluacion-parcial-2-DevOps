@@ -1,0 +1,46 @@
+# Versión del formato de Docker Compose. '3.8' es una versión moderna y estable.
+version: '3.8'
+
+# Definición de los servicios (contenedores) que se van a levantar.
+services:
+  # 1. Servicio 'app': Tu aplicación de Node.js
+  app:
+    image: raynagah/evaluacion-parcial:latest
+    container_name: mi-app-node
+    ports:
+      - "3000:3000"
+    # Variables de entorno actualizadas para conectar a la base de datos.
+    environment:
+      - DB_HOST=db
+      - DB_USER=raynagah
+      - DB_PASSWORD=raynagah123
+      - DB_NAME=evaluacion_parcial2
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  # 2. Servicio 'db': La base de datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: mi-db-mysql
+    # Variables de entorno para configurar MySQL con tus nuevos valores.
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: evaluacion_parcial2
+      MYSQL_USER: raynagah
+      MYSQL_PASSWORD: raynagah123
+    restart: unless-stopped
+
+  # 3. Servicio 'phpmyadmin': El administrador de base de datos web
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: mi-phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+    depends_on:
+      - db
+    restart: unless-stopped
+
