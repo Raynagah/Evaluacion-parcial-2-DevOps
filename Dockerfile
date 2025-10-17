@@ -33,4 +33,3 @@ EXPOSE 3000
 # El comando final para iniciar el servidor.
 # Le dice al paquete 'serve' que sirva el contenido de la carpeta 'build'.
 CMD [ "npx", "serve", "-s", "build", "-l", "3000" ]
-```
