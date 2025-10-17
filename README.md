@@ -53,9 +53,9 @@ phpMyAdmin: <http://localhost:8080>
 
 Servidor: db
 
-Usuario: root
+Usuario: raynagah
 
-Contraseña: root_password
+Contraseña: raynagah123
 
 Detener los contenedores
 

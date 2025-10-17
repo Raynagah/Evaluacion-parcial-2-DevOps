@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: raynagah/evaluacion-parcial:latest
+    build: .
     ports:
       - "3000:3000"
     depends_on:
@@ -19,8 +19,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: raynagah
       MYSQL_DATABASE: evaluacion_parcial2
-      MYSQL_USER: raynagah
-      MYSQL_PASSWORD: raynagah123
     ports:
       - "3306:3306"
 
