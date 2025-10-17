@@ -10,10 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # --- INICIO DE LA CORRECCIÓN ---
     permissions:
       security-events: write # Concede permiso para subir resultados de seguridad
-    # --- FIN DE LA CORRECCIÓN ---
 
     steps:
     - name: Checkout del código
@@ -39,11 +37,17 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       run: npx snyk test || echo "Snyk ha encontrado vulnerabilidades, pero seguirá el flujo."
 
-    - name: x
+    - name: Análisis de código con SonarCloud
       env:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Requerido por SonarCloud
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-      sonar-scanner \-Dsonar.projectKey=x \-Dsonar.organization=x \-Dsonar.sources=./src \-Dsonar.host.url=https://sonarcloud.io/ \-Dsonar.login=${SONAR_TOKEN} \-Dsonar.branch.name=main
+        npx sonar-scanner \
+          -Dsonar.projectKey=x \
+          -Dsonar.organization=x \
+          -Dsonar.sources=./src \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
     - name: Iniciar sesión en Docker Hub
       uses: docker/login-action@v3
