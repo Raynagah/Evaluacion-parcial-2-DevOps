@@ -40,7 +40,8 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --sarif-file-output=snyk.sarif
+        # Añadimos un umbral de severidad para asegurar que el formato SARIF sea compatible
+        args: --sarif-file-output=snyk.sarif --severity-threshold=low
 
     - name: Subir resultados de Snyk
       uses: github/codeql-action/upload-sarif@v3
