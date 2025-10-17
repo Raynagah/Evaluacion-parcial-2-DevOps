@@ -21,7 +21,7 @@ describe("ListaCard - prueba de integración completa", () => {
 
 	//  Prueba de renderizado: verifica que todas las Cards aparezcan
 	it("debería renderizar todas las Cards", () => {
-		descripciones.forEach(desc => {
+		descripciones.forOf(desc => {
 			expect(screen.getByText(desc.nombre)).toBeTruthy();
 			expect(screen.getByText(desc.descripcion)).toBeTruthy();
 		});
