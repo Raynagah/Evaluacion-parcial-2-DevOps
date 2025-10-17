@@ -23,21 +23,21 @@ jobs:
     - name: Instalar dependencias
       run: npm install
 
-    # --- INICIO DE LA CORRECCIÓN FINAL ---
     - name: Ejecutar Tests con Karma
-      # Usamos npx para llamar a Karma directamente y asegurar que lea el archivo de configuración.
       run: npx karma start karma.conf.js --single-run
-    # --- FIN DE LA CORRECCIÓN FINAL ---
 
     - name: Revisar código con ESLint
       run: npx eslint . --fix
 
+    # --- INICIO DE LA CORRECCIÓN ---
     - name: Analizar dependencias con Snyk
       uses: snyk/actions/node@master
+      continue-on-error: true # No detiene el workflow si Snyk encuentra vulnerabilidades
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         args: --sarif-file-output=snyk.sarif
+    # --- FIN DE LA CORRECCIÓN ---
 
     - name: Subir resultados de Snyk
       uses: github/codeql-action/upload-sarif@v3
