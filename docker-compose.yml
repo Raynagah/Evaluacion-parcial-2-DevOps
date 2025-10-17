@@ -1,48 +1,34 @@
-# Definición de los servicios (contenedores) que se van a levantar.
+version: '3.8'
+
 services:
-  # 1. Servicio 'app': Tu aplicación de Node.js
   app:
     image: raynagah/evaluacion-parcial:latest
-    container_name: mi-app-node
     ports:
       - "3000:3000"
+    depends_on:
+      - db
     environment:
       - DB_HOST=db
       - DB_USER=raynagah
       - DB_PASSWORD=raynagah123
       - DB_NAME=evaluacion_parcial2
-    depends_on:
-      db:
-        condition: service_healthy
-    restart: unless-stopped
 
-  # 2. Servicio 'db': La base de datos MySQL
   db:
-    image: mysql:8.0
-    container_name: mi-db-mysql
-    healthcheck:
-      # CORRECCIÓN: Se usa la contraseña 'root' directamente en el comando.
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    image: mysql:5.7
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: raynagah
       MYSQL_DATABASE: evaluacion_parcial2
       MYSQL_USER: raynagah
       MYSQL_PASSWORD: raynagah123
-    restart: unless-stopped
+    ports:
+      - "3306:3306"
 
-  # 3. Servicio 'phpmyadmin': El administrador de base de datos web
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: mi-phpmyadmin
+    restart: always
     ports:
       - "8080:80"
     environment:
-      - PMA_HOST=db
-      - PMA_PORT=3306
-    depends_on:
-      - db
-    restart: unless-stopped
-
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: raynagah
