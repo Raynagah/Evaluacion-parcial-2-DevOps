@@ -1,4 +1,4 @@
-module.exports = function configurarKarma(config) {
+module.exports = function(config) {
 	config.set({
 		basePath: "",
 		frameworks: ["jasmine"],
@@ -34,7 +34,7 @@ module.exports = function configurarKarma(config) {
 		colors: true,
 		logLevel: config.LOG_INFO,
 		autoWatch: true,
-		browsers: ["Chrome"],
+		browsers: ["ChromeHeadless"],
 		singleRun: true,
 		concurrency: Infinity
 	});
