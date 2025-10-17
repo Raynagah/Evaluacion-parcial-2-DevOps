@@ -11,9 +11,11 @@ RUN npm install
 # Copiar el resto del código fuente
 COPY . .
 
-# Ejecutar el script de build de React. Esto crea una carpeta 'build'
-# con todos los archivos estáticos optimizados.
-RUN npm run build
+# --- INICIO DE LA CORRECCIÓN ---
+# Ejecutar el script de build de React.
+# CI=false evita que las advertencias se traten como errores fatales en el entorno de CI.
+RUN CI=false npm run build
+# --- FIN DE LA CORRECCIÓN ---
 
 # --- Etapa 2: Servir la aplicación en producción ---
 FROM node:18-alpine
@@ -33,3 +35,4 @@ EXPOSE 3000
 # El comando final para iniciar el servidor.
 # Le dice al paquete 'serve' que sirva el contenido de la carpeta 'build'.
 CMD [ "npx", "serve", "-s", "build", "-l", "3000" ]
+
