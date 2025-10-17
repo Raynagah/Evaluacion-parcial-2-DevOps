@@ -23,11 +23,11 @@ jobs:
     - name: Instalar dependencias
       run: npm ci
 
-    # --- INICIO DE LA CORRECCIÓN ---
+    # --- INICIO DE LA CORRECCIÓN FINAL ---
     - name: Ejecutar Tests con Karma
-      # Le indicamos explícitamente que use nuestro archivo de configuración
-      run: npm test -- karma.conf.js --single-run
-    # --- FIN DE LA CORRECCIÓN ---
+      # Usamos npx para llamar a Karma directamente y asegurar que lea el archivo de configuración.
+      run: npx karma start karma.conf.js --single-run
+    # --- FIN DE LA CORRECCIÓN FINAL ---
 
     - name: Revisar código con ESLint
       run: npx eslint . --ext .js,.jsx,.ts,.tsx
