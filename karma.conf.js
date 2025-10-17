@@ -3,6 +3,11 @@ module.exports = function karmaConfiguration(config) {
     config.set({
         basePath: "",
         frameworks: ["jasmine"],
+        plugins: [
+            require('karma-jasmine'),
+            require('karma-webpack'),
+            require('karma-chrome-launcher')
+        ],
         files: [
             "src/test/ListaCard.test.js"
         ],
@@ -56,4 +61,3 @@ module.exports = function karmaConfiguration(config) {
         concurrency: Infinity
     });
 };
-
