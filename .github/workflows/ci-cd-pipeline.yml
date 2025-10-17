@@ -16,9 +16,9 @@ jobs:
         node-version: '18' 
 
     - name: Install dependencies
-      run: npm install
+      run: npm ci 
     - name: Run tests with Jasmine/Karma
-      run: npx karma start --single-run 
+      run: npm test 
 
     - name: Lint code with ESLint
       run: npm run lint 
