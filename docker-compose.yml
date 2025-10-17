@@ -9,24 +9,33 @@ services:
     container_name: mi-app-node
     ports:
       - "3000:3000"
-    # Variables de entorno actualizadas para conectar a la base de datos.
     environment:
       - DB_HOST=db
       - DB_USER=raynagah
       - DB_PASSWORD=raynagah123
       - DB_NAME=evaluacion_parcial2
+    # CORRECCIÓN: 'depends_on' ahora espera a que la base de datos esté saludable (healthy).
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
   # 2. Servicio 'db': La base de datos MySQL
   db:
     image: mysql:8.0
     container_name: mi-db-mysql
-    # Variables de entorno para configurar MySQL con tus nuevos valores.
+    # CORRECCIÓN: Añadir un 'healthcheck' para verificar cuándo MySQL está realmente listo.
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: evaluacion_parcial2
       MYSQL_USER: raynagah
       MYSQL_PASSWORD: raynagah123
+    restart: unless-stopped
 
   # 3. Servicio 'phpmyadmin': El administrador de base de datos web
   phpmyadmin:
@@ -39,4 +48,5 @@ services:
       - PMA_PORT=3306
     depends_on:
       - db
+    restart: unless-stopped
 
