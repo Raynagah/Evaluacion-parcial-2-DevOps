@@ -18,7 +18,7 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: Run tests with Jasmine/Karma
-      run: npm test 
+      run: npx karma start --single-run 
 
     - name: Lint code with ESLint
       run: npm run lint 
