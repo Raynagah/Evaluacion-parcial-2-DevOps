@@ -17,8 +17,6 @@ services:
       - DB_NAME=evaluacion_parcial2
     depends_on:
       - db
-    restart: unless-stopped
-
   # 2. Servicio 'db': La base de datos MySQL
   db:
     image: mysql:8.0
@@ -29,7 +27,6 @@ services:
       MYSQL_DATABASE: evaluacion_parcial2
       MYSQL_USER: raynagah
       MYSQL_PASSWORD: raynagah123
-    restart: unless-stopped
 
   # 3. Servicio 'phpmyadmin': El administrador de base de datos web
   phpmyadmin:
@@ -42,5 +39,4 @@ services:
       - PMA_PORT=3306
     depends_on:
       - db
-    restart: unless-stopped
 
