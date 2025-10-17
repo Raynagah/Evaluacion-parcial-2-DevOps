@@ -39,11 +39,6 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       run: npx snyk test || echo "Snyk ha encontrado vulnerabilidades, pero seguirá el flujo."
 
-    - name: Subir resultados de Snyk
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: snyk.sarif
-
     - name: Análisis de código con SonarCloud
       uses: SonarSource/sonarcloud-github-action@master
       env:
