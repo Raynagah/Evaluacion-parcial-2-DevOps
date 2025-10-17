@@ -1,6 +1,3 @@
-# Versión del formato de Docker Compose. '3.8' es una versión moderna y estable.
-version: '3.8'
-
 # Definición de los servicios (contenedores) que se van a levantar.
 services:
   # 1. Servicio 'app': Tu aplicación de Node.js
@@ -14,7 +11,6 @@ services:
       - DB_USER=raynagah
       - DB_PASSWORD=raynagah123
       - DB_NAME=evaluacion_parcial2
-    # CORRECCIÓN: 'depends_on' ahora espera a que la base de datos esté saludable (healthy).
     depends_on:
       db:
         condition: service_healthy
@@ -24,9 +20,9 @@ services:
   db:
     image: mysql:8.0
     container_name: mi-db-mysql
-    # CORRECCIÓN: Añadir un 'healthcheck' para verificar cuándo MySQL está realmente listo.
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      # CORRECCIÓN: Se usa la contraseña 'root' directamente en el comando.
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
       interval: 10s
       timeout: 5s
       retries: 5
