@@ -39,15 +39,11 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       run: npx snyk test || echo "Snyk ha encontrado vulnerabilidades, pero seguirá el flujo."
 
-    - name: Análisis de código con SonarCloud
-      uses: SonarSource/sonarcloud-github-action@master
+    - name: x
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        args: >
-          -Dsonar.organization=tu-organizacion-en-sonarcloud
-          -Dsonar.projectKey=tu-clave-de-proyecto-en-sonarcloud
+        run: |
+        sonar-scanner \-Dsonar.projectKey=x \-Dsonar.organization=x \-Dsonar.sources=./src \-Dsonar.host.url=https://sonarcloud.io/ \-Dsonar.login=${SONAR_TOKEN} \-Dsonar.branch.name=main
 
     - name: Iniciar sesión en Docker Hub
       uses: docker/login-action@v3
