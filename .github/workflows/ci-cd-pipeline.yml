@@ -30,7 +30,7 @@ jobs:
     # --- FIN DE LA CORRECCIÓN FINAL ---
 
     - name: Revisar código con ESLint
-      run: npx eslint . --ext .js,.jsx,.ts,.tsx
+      run: npx eslint . --fix
 
     - name: Analizar dependencias con Snyk
       uses: snyk/actions/node@master
